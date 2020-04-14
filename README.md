@@ -1,7 +1,7 @@
 # java-k8s-cicd
-* Create Jenkins pipline
+* Create Jenkins pipeline
 * build mvn Project with given pom.xml
-* Create Docker container with Jenkins pipline(use the java artifact that you created)
+* Create Docker container with Jenkins pipeline(use the java artifact that you created)
 * Push Docker to Nexus Docker Repositry with Jenkins
 * Create K8s Deploymentfile with node port
 * deploy the docker container that you build with Version # in K8s.
