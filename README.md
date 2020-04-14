@@ -1,4 +1,5 @@
 # java-k8s-cicd
+* Fork repository 
 * Create Jenkins pipeline
 * build mvn Project with given pom.xml
 * Create Docker container with Jenkins pipeline(use the java artifact that you created)
