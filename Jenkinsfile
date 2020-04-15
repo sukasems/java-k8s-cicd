@@ -9,7 +9,7 @@ pipeline {
                 withSonarQubeEnv(credentialsId: 'sonar-jenkins', installationName: 'my-sonar') { // You can override the credential to be used
                     sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.6.0.1398:sonar'
                 }
-                timeout(time: 10, unit: 'MINUTES') {
+                timeout(time: 1, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
                 }
             }
