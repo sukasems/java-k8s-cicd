@@ -1,5 +1,6 @@
 # java-k8s-cicd
-* Fork repository 
+
+* Fork repository
 * Create Jenkins pipeline
 * build mvn Project with given pom.xml
 * Create Docker container with Jenkins pipeline(use the java artifact that you created)
@@ -11,3 +12,6 @@ Notes: Container port : 8080
 
 with http://IPADD:NODEPORT you should be able to access the java application.
 
+## Command
+
+`docker build -t puuga/java-k8s-cicd .`
