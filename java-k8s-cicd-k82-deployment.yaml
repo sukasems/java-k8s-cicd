@@ -45,6 +45,6 @@ spec:
   ports:
     - name: java-k8s-cicd
       protocol: TCP
-      nodePort: 30101
+      nodePort: 30102
       port: 5000
       targetPort: 5000
