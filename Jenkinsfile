@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('SonarQube analysis') {
             steps {
-                withSonarQubeEnv(credentialsId: 'sonar-jenkins', installationName: 'sonar') { // You can override the credential to be used
+                withSonarQubeEnv(credentialsId: 'sonar-jenkins', installationName: 'MY-SONAR-SCANNER') { // You can override the credential to be used
                     sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.6.0.1398:sonar'
                 }
                 timeout(time: 10, unit: 'MINUTES') {
@@ -25,7 +25,7 @@ pipeline {
         stage('Push image to registry') { 
             steps {
                 script {
-                    docker.withRegistry('http://172.28.128.3:30700', 'nexus-docker') {
+                    docker.withRegistry('http://172.28.128.3:30700', 'nexus-user-and-password') {
                         dockerImage.push()
                         dockerImage.push('latest')
                     }
@@ -41,6 +41,17 @@ pipeline {
                             sed -i 's/latest/'"${BUILD_ID}"'/g' java-k8s-cicd-k82-deployment.yaml
                             kubectl --kubeconfig=${KUBECONFIG} apply -f java-k8s-cicd-k82-deployment.yaml
                         '''
+                    }
+                    withCredentials([sshUserPrivateKey(credentialsId: 'vagrant-ssh', keyFileVariable: 'SSHKEY')]) {
+                      sh '''
+                        sed -i 's/latest/'"${BUILD_ID}"'/g' java-k8s-cicd-deployment.yaml
+                        sed -i 's/REGIPADD/172.28.128.3:30700/g' java-k8s-cicd-deployment.yaml
+
+                        cat nodejs-k8s-cicd-deployment.yaml
+
+                        scp -o StrictHostKeyChecking=no -i ${SSHKEY} java-k8s-cicd-deployment.yaml vagrant@10.0.2.15:/home/vagrant/
+                        ssh -i ${SSHKEY} vagrant@10.0.2.15 kubectl apply -f java-k8s-cicd-deployment.yaml
+                      '''
                     }
                     
                 }
