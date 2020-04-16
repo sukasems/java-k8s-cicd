@@ -11,7 +11,3 @@
 Notes: Container port : 8080
 
 with http://IPADD:NODEPORT you should be able to access the java application.
-
-## Command
-
-`docker build -t puuga/java-k8s-cicd .`
