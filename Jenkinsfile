@@ -35,13 +35,6 @@ pipeline {
         stage('Deploy to K8s cluster') { 
             steps {
                 script {
-                    // withCredentials([kubeconfigFile(credentialsId: 'k8s-config', variable: 'KUBECONFIG')]) {
-                    //     sh '''
-                    //         kubectl version
-                    //         sed -i 's/latest/'"${BUILD_ID}"'/g' java-k8s-cicd-k82-deployment.yaml
-                    //         kubectl --kubeconfig=${KUBECONFIG} apply -f java-k8s-cicd-k82-deployment.yaml
-                    //     '''
-                    // }
                     withCredentials([sshUserPrivateKey(credentialsId: 'vagrant-ssh', keyFileVariable: 'SSHKEY')]) {
                       sh '''
                         sed -i 's/latest/'"${BUILD_ID}"'/g' java-k8s-cicd-deployment.yaml
