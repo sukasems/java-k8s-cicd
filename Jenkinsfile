@@ -40,7 +40,7 @@ pipeline {
                         sed -i 's/latest/'"${BUILD_ID}"'/g' java-k8s-cicd-deployment.yaml
                         sed -i 's/REGIPADD/172.28.128.3:30700/g' java-k8s-cicd-deployment.yaml
 
-                        cat nodejs-k8s-cicd-deployment.yaml
+                        cat java-k8s-cicd-deployment.yaml
 
                         scp -o StrictHostKeyChecking=no -i ${SSHKEY} java-k8s-cicd-deployment.yaml vagrant@10.0.2.15:/home/vagrant/
                         ssh -i ${SSHKEY} vagrant@10.0.2.15 kubectl apply -f java-k8s-cicd-deployment.yaml
